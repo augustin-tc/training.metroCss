@@ -1,32 +1,65 @@
 ﻿// For an introduction to the Blank template, see the following documentation:
 // http://go.microsoft.com/fwlink/?LinkId=232509
+
 (function () {
     "use strict";
-
+   
     var app = WinJS.Application;
-    var activation = Windows.ApplicationModel.Activation;
-
-    app.onactivated = function (args) {
-        if (args.detail.kind === activation.ActivationKind.launch) {
-            if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
-                // TODO: This application has been newly launched. Initialize
-                // your application here.
+    app.onactivated = function (eventObject) {
+        if (eventObject.detail.kind ===
+        Windows.ApplicationModel.Activation.ActivationKind.launch) {
+            if (eventObject.detail.previousExecutionState !==
+            Windows.ApplicationModel.Activation.ApplicationExecutionState.terminated) {
+                performInitialSetup(eventObject);
             } else {
-                // TODO: This application was suspended and then terminated.
-                // To create a smooth user experience, restore application state here so that it looks like the app never stopped running.
+                performRestore(eventObject);
             }
-            args.setPromise(WinJS.UI.processAll());
+            WinJS.UI.processAll();
         }
     };
+    app.oncheckpoint = function (eventObject) {
+        performSuspend(eventObject);
+    };
+    app.start();
+    function performInitialSetup(e) {
 
-    app.oncheckpoint = function (args) {
-        // TODO: This application is about to be suspended. Save any state
-        // that needs to persist across suspensions here. You might use the
-        // WinJS.Application.sessionState object, which is automatically
-        // saved and restored across suspension. If you need to complete an
-        // asynchronous operation before your application is suspended, call
-        // args.setPromise().
+        WinJS.Binding.processAll(document.body, ViewModel);
+        
+        WinJS.UI.processAll().then(function () {
+            UI.List.displayListItems();
+            UI.List.setupListEvents();
+        });
+
+        WinJS.Utilities.query('#newZipButton').listen("click", function (e) {
+            ViewModel.UserData.homeZipCode = WinJS.Utilities.query('#newZip')[0].value;
+        });
+
+        WinJS.Utilities.query('button').listen("click", function (e) {
+            if (this.id == "addItemButton") {
+                ViewModel.UserData.addItem("Ice Cream", 1, "Vanilla", "Walmart");
+            } else {
+                ViewModel.UserData.getItems().pop();
+            }
+        });
+        var setValue = function () {
+            var list = ViewModel.UserData.getItems();
+
+            document.getElementById("listInfo").innerText = list.getAt(list.length - 1).item;
+        };
+        var eventTypes = ["itemchanged", "iteminserted", "itemmoved", "itemremoved"];
+        eventTypes.forEach(function (type) {
+            ViewModel.UserData.getItems().addEventListener(type, setValue);
+        });
+        setValue();
+
     };
 
-    app.start();
+  
+
+    function performRestore(e) {
+        // TODO
+    }
+    function performSuspend(e) {
+        // TODO
+    }
 })();
