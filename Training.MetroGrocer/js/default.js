@@ -28,6 +28,8 @@
         WinJS.UI.processAll().then(function () {
             UI.List.displayListItems();
             UI.List.setupListEvents();
+            UI.AppBar.setupButtons();
+            UI.Flyouts.setupAddItemFlyout();
         });
 
         WinJS.Utilities.query('#newZipButton').listen("click", function (e) {
