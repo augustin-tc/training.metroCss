@@ -30,6 +30,17 @@
             UI.List.setupListEvents();
             UI.AppBar.setupButtons();
             UI.Flyouts.setupAddItemFlyout();
+
+            ViewModel.State.bind("selectedItemIndex", function (newValue) {
+                var targetElement = document.getElementById("itemDetailTarget");
+                WinJS.Utilities.empty(targetElement)
+                var url = newValue == -1 ? "/html/noSelection.html" :
+                "/pages/ItemDetail.html"
+                WinJS.UI.Pages.render(url, targetElement);
+            });
+            WinJS.UI.Pages.render("/html/storeDetail.html",
+ document.getElementById("storeDetailTarget"));
+            
         });
 
         WinJS.Utilities.query('#newZipButton').listen("click", function (e) {
@@ -37,9 +48,9 @@
         });
 
         WinJS.Utilities.query('button').listen("click", function (e) {
-            if (this.id == "addItemButton") {
+            if (this.id == "addItemButton2") {
                 ViewModel.UserData.addItem("Ice Cream", 1, "Vanilla", "Walmart");
-            } else {
+            } else if (this.id == "removeItemButton") {
                 ViewModel.UserData.getItems().pop();
             }
         });

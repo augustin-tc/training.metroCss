@@ -10,10 +10,13 @@
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
 
     <!-- Training.MetroGrocer references -->
-    <link href="/css/default.css" rel="stylesheet" />
+    <link href="/css/list.css" rel="stylesheet">
+    <link href="/css/flyouts.css" rel="stylesheet">
+    <link href="/css/default.css" rel="stylesheet">
+    <script src="/js/viewmodel.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/pages.js"></script>
     <script src="/js/default.js"></script>
-    <script src="js/ViewModel.js"></script>
-    <script src="js/ui.js"></script>
 </head>
 <body>
     <div id="contentGrid">
@@ -32,7 +35,7 @@
                 The last item is<span id="listInfo"></span>
             </div>
             <div class="win-type-x-large">
-                <button id="addItemButton">Add Item</button>
+                <button id="addItemButton2">Add Item</button>
                 <button id="removeItemButton">Remove Item</button>
             </div>
 
@@ -51,10 +54,14 @@
         </div>
        
         <div id="topRightContainer" class="gridRight">
-            <h1 class="win-type-xx-large">Top Right Container</h1>
+            <div id="itemDetailTarget">
+                <h1 class="win-type-xx-large">Top Right Container</h1>
+            </div>
         </div>
         <div id="bottomRightContainer" class="gridRight">
             <h1 class="win-type-xx-large">Bottom Right Container</h1>
+            <h1 class="win-type-xx-large">Store Detail</h1>
+            <div id="storeDetailTarget"></div>
         </div>
     </div>
     <!-- import HTML fragments -->

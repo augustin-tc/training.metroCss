@@ -29,17 +29,24 @@
                 newOption.text = item;
                 selectElement.add(newOption);
             });
-            document.getElementById("addItemButton").addEventListener("click",
-            function () {
-                var item =
-                WinJS.Utilities.query("#addItemFlyout #item")[0].value;
-                var quantity =
- WinJS.Utilities.query("#addItemFlyout #quantity")[0].value;
-                var store = WinJS.Utilities.query("#addItemFlyout #stores")[0].value;
-                ViewModel.UserData.addItem(item, quantity, store);
-                document.getElementById("addItemFlyout").winControl.hide();
-                document.getElementById("appBar").winControl.hide();
+            var actionButtons = ["addItemButton"];
+
+            actionButtons.forEach(function (buttonId) {
+
+                document.getElementById(buttonId).addEventListener("click",
+                            function () {
+                                var item =
+                                WinJS.Utilities.query("#addItemFlyout #item")[0].value;
+                                var quantity =
+                 WinJS.Utilities.query("#addItemFlyout #quantity")[0].value;
+                                var store = WinJS.Utilities.query("#addItemFlyout #stores")[0].value;
+                                ViewModel.UserData.addItem(item, quantity, store);
+                                document.getElementById("addItemFlyout").winControl.hide();
+                                document.getElementById("appBar").winControl.hide();
+                            });
+
             });
+            
         }
     });
     //list of items 
